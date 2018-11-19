@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			#container {
+				display: grid;
+				grid-template-rows: 1fr;
+				grid-template-columns: 1fr;
+			}
+			.gumbeaux {
+				animation-duration: 1s;
+				animation-name: spin;
+				animation-iteration-count: infinite;
+				width: 100%;
+				height: 100%;
+			}
+
+			@keyframes spin {
+				from {
+					transform: rotate(0deg);
+					width: 0%;
+					height: 0%;
+				}
+
+				to {
+					transform: rotate(360deg);
+					width: 100%;
+					height: 100%:
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div id="container" class="container"></div>
+		<script>
+			const gum = new Image();
+			gum.src = "gumbeaux.jpg";
+			gum.className = "gumbeaux";
+			let gums = [gum];
+			let n = 1;
+			function double() {
+				gums = gums.concat(gums).concat(gums).concat(gums).map(gum => gum.cloneNode());
+				n *= 2;
+				const root = document.querySelector('#container');
+				root.innerHtml = '';
+				gums.forEach(gum => root.appendChild(gum));
+				const flexTemplate = Array.from({length: n}, () => '1fr').reduce((acc, x) => acc + ' ' + x);
+				root.style.gridTemplateRows = flexTemplate;
+				root.style.gridTemplateColumns = flexTemplate;
+			}
+			double()
+			setInterval(double, 1000);
+		</script>
+	</body>
+</html>
